@@ -1,4 +1,4 @@
-/** Lesson 2.cpp, by Kevin Wang
+/** Lesson2.cpp, by Kevin Wang
  * Asks for numbers and screams them out with Maths! OwO UwU
  **/
 #include <iostream>

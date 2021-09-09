@@ -1,4 +1,4 @@
-/** Lesson 1.cpp, by Kevin Wang
+/** Lesson1.cpp, by Kevin Wang
  * prints "Hello, World!"
  * not sure why we need the filename in the header, if it's already in the filename
  **/

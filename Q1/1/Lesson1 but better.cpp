@@ -1,4 +1,4 @@
-/** Lesson 1 but better.cpp, by Kevin Wang
+/** Lesson1 but better.cpp, by Kevin Wang
  * prints "Hello, World!"
  * all the indentation you've ever dreamed of
  **/
