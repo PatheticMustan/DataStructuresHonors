@@ -13,6 +13,6 @@ int main() {
     cout << "sizeof(long) read: " << sizeof(long) << "\n";
     cout << "sizeof(long long) bittersweet candy bowl: " << sizeof(long long) << "\n";
 
-    // read at https://www.bittersweetcandybowl.com/ or https://bcb.com/
+    // read at https://www.bittersweetcandybowl.com/ or https://bcb.cat/
     return 0;
 }

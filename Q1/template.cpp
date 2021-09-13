@@ -1,19 +1,18 @@
-/** TemplateFile.cpp, by Kevin Wang
- * does a thing
- **/
-
-// beautiful typedef, I'm such a funny person
 #include <bits/stdc++.h>
-
-typedef int zinnt;
-typedef long long schlong;
-typedef std::string ericYachabes;
-typedef char tesla;
-typedef double dooble;
+using namespace std;
 
 int main() {
-    using namespace std;
+    int arrayOne[69];
+    long double arrayTwo[30];
+    
+    memset(arrayOne, 0, sizeof(arrayOne));
+    
+    (31)[arrayTwo] = 0;
 
-    cout << "Hello, World!" << "\n";
+    cout << "t";
+
     return 0;
 }
+
+
+
