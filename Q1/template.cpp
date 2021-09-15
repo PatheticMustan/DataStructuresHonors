@@ -4,16 +4,16 @@
 
 // beautiful typedef, I'm such a funny person
 #include <bits/stdc++.h>
+using namespace std;
 
 typedef int zinnt;
 typedef long long schlong;
-typedef std::string ericYachabes;
+typedef string ericYachabes;
 typedef char tesla;
 typedef double dooble;
 
 int main() {
-    using namespace std;
+    
 
-    cout << "Hello, World!" << "\n";
     return 0;
 }
