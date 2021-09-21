@@ -31,9 +31,22 @@ using namespace std;
 
 // Converts the argument integer from base 10 to the argument base (base <= 9).
 string toBase(int decimal, int base) {
-    // just like base 10 has the ones place, tens place, hundreds place,
-    // base n has the n**0's place, n**1's place, and n**2's place
-    return "test";
+    // speed writing this at 1 am
+    int place = 1;
+
+    while (!(place > decimal)) place *= base;
+    place /= base;
+
+    string result = "";
+    while (place != 1) {
+        result += to_string(decimal / place);
+        decimal %= place;
+        place /= base;
+    }
+    result += to_string(decimal);
+
+
+    return result;
 }
 
 // Converts the argument integer from base 10 to base 16.
@@ -57,7 +70,8 @@ int main() {
          << "[1] Convert a decimal to a base 2-9"           << "\n"
          << "[2] Convert a decimal to base 16"              << "\n"
          << "[3] Convert a number from base 2-9 to decimal" << "\n"
-         << "[4] Convert a base 16 string to decimal"       << "\n\n";
+         << "[4] Convert a base 16 string to decimal"       << "\n"
+         << "[5] Exit" << "\n\n";
 
     int input;
     cin >> input;
@@ -71,7 +85,7 @@ int main() {
             int a_decimal, a_base;
             cin >> a_decimal >> a_base;
 
-            cout << toBase(a_decimal, a_base);
+            cout << "\nResult: " << toBase(a_decimal, a_base);
             break;
         }
         
@@ -83,7 +97,7 @@ int main() {
             int b_decimal;
             cin >> b_decimal;
 
-            cout << toBase16(b_decimal);
+            cout << "\nResult: " << toBase16(b_decimal);
             break;
         }
 
@@ -96,7 +110,7 @@ int main() {
             int c_base;
             cin >> c_number >> c_base;
 
-            cout << toInteger(c_number, c_base);
+            cout << "\nResult: " << toInteger(c_number, c_base);
             break;
         }
 
@@ -108,8 +122,13 @@ int main() {
             string d_number;
             cin >> d_number;
 
-            cout << toInteger16(d_number);
+            cout << "\nResult: " << toInteger16(d_number);
             break;
+        }
+
+        case 5: {
+            // exit
+            return 0;
         }
 
         default: {
@@ -117,6 +136,11 @@ int main() {
             break;
         }
     }
+
+    cout << "\n\n";
+
+    // go again
+    main();
 
     return 0;
 }
