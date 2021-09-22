@@ -29,14 +29,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// utility function, convert a number to its hex equiv
+// 0123456789ABCDEF
+char c(int n) {
+    return "0123456789ABCDEF"[n];
+}
+
 // Converts the argument integer from base 10 to the argument base (base <= 9).
 string toBase(int decimal, int base) {
-    // speed writing this at 1 am
+    // edge case lmao
+    if (decimal == 0) return "0";
+
+    // speed writing this at 1 am, sorry for bad quality
     int place = 1;
 
+    // get highest place, it's base**n
     while (!(place > decimal)) place *= base;
     place /= base;
 
+    // start from the highest place, every time we go down, we divide base**n by base
     string result = "";
     while (place != 1) {
         result += to_string(decimal / place);
@@ -51,17 +62,78 @@ string toBase(int decimal, int base) {
 
 // Converts the argument integer from base 10 to base 16.
 string toBase16(int decimal) {
-    return "poop";
+    int place = 1;
+
+    // I just copy pasted this from method #1
+    if (decimal == 0) return "0";
+
+    while (!(place > decimal)) place *= 16;
+    place /= 16;
+
+    // start from the highest place, every time we go down, we divide base**n by base
+    string result = "";
+    while (place != 1) {
+        result += c(decimal / place);
+        decimal %= place;
+        place /= 16;
+    }
+    result += c(decimal);
+
+    return result;
 }
 
 // Converts the argument string from the argument base to base 10 (base <= 9).
 int toInteger(string input, int base) {
-    return 5;
+    // tbh, I worked on method #4 first, this is just method #4 but without the hex to int conversion thing
+    int result = 0;
+
+    /** 420 base 5 --> base 10
+     * 4   2   0      loop thru each char
+     * 25  5   1      multiply by place, usually just 16**(n-1)
+     * ---------
+     * 100 + 10 + 0
+     * 110
+     **/
+    for (int i=0; i<input.length(); i++) {
+        int place = pow(base, (input.length()-i-1));
+
+        //cout << place << " " << input[i] << " " << place * input[i] << "\n";
+
+        // cpp just isn't as comfy as JS
+        // https://stackoverflow.com/a/30727561
+        // need to convert `input[i]` to an int, in cpp I take the ASCII and do char-48
+        // in Javascript, you can just do +(char)
+        // woe is me, I can't use my cheap tricks anymore
+        result += place * ((int)input[i]-'0');
+    }
+
+
+    return result;
 }
 
 // Converts the argument string from base 16 to base 10.
+// i'm going to the dark depths of hell for (string number)
 int toInteger16(string number) {
-    return 2;
+    int result = 0;
+    string hexString = "0123456789ABCDEF";
+
+    /** 0xFFF
+     * F        F    F      loop thru each char
+     * 15      15   15      convert from hex to int
+     * 256     16    1      multiply by place, usually just 16**(n-1)
+     * ---------------
+     * 3840 + 240 + 15
+     * 4095
+     **/
+    for (int i=0; i<number.length(); i++) {
+        int place = pow(16, (number.length()-i-1));
+        int hexCharToInt = hexString.find(toupper(number[i]));
+
+        result += place * hexCharToInt;
+    }
+
+
+    return result;
 }
 
 // get input stuff
