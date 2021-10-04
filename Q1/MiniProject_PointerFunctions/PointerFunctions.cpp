@@ -37,7 +37,37 @@ void swap(int* a, int* b) {
 }
 
 // This function counts the number of both vowels and consonants in a given string.
-void letterCount(string s, int* numVowels, int* numConsonants) {}
+void letterCount(string s, int* numVowels, int* numConsonants) {
+    string vowels = "AEIOU";
+    string consonants = "BCDFGHJKLMNPQRSTVWXYZ";
+
+    for (int i=0; i<s.length(); i++) {
+        // edge case: lowercase letters, numbers
+        // spec says all uppercase letters and no spaces, but it doesn't say anything about symbols/numbers
+
+        // debug thing
+        //cout << "letter: " << s[i] << " cons: " << *numConsonants << " vowel: " << *numVowels << "\n";
+
+        // use string#find to check if it's included in the list
+        // if it doesn't find it, it returns -1! If it's not -1, it's in the string
+        if (vowels.find(s[i]) != -1) {
+            *numVowels = *numVowels + 1;
+        }
+        if (consonants.find(s[i]) != -1) {
+            *numConsonants = *numConsonants + 1;
+        }
+    }
+
+    cout << "\n\n";
+}
+
+// This function will display each element and its memory location. The information for each element must be
+// on a new line, with the element and memory location separated by a single space.
+void arrayInfo(int* arrPtr, int length) {
+    for (int i=0; i<length; i++) {
+        cout << (arrPtr+i) << " " << *(arrPtr+i) << "\n";
+    }
+}
 
 int main() {
     cout << "Oh yeah yeah! Pick one option!"                                                       << "\n\n"
@@ -66,9 +96,47 @@ int main() {
             break;
         }
         case 2: {
+            // I spent 30 minutes trying to figure out why these ints started out as seemingly random numbers
+            // it was because I didn't initialize it to 0, bruh bruh bruh
+            int vowels = 0,
+                consonants = 0;
+            
+            //cout << vowels << consonants;
+            string input;
+
+            cout << "Put in an all caps string: " << "\n";
+            //getline(cin, input);
+            // I don't know why getline is not waiting for input, but I'm just gonna blame it on language bad
+            // there's probably a very obvious reason for why it's not working, but my monkey brain can't find it
+            cin >> input;
+
+            letterCount(input, &vowels, &consonants);
+
+            cout << "Vowels: " << vowels << " Consonants: " << consonants << "\n";
+
             break;
         }
         case 3: {
+            int size;
+
+            cout << "Type in the size of the array: " << "\n";
+            cin >> size;
+            if (size <= 0) {
+                cout << "AHHHHHHH INVALID SIZE AHHHHHH" << "\n\n";
+                break;
+            }
+
+            int arr[size];
+            
+            cout << "Now type in " << size << " numbers: " << "\n";
+            for (int i=0; i<size; i++) {
+                cin >> arr[i];
+            }
+
+            cout << "\n";
+            arrayInfo(arr, size);
+            cout << "\n";
+
             break;
         }
         case 4: {
