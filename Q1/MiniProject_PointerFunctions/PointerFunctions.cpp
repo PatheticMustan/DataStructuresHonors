@@ -18,10 +18,9 @@
  *      function is in the function itself.
  * 
  * This project will be graded on:
- * 1. Documentation (4 points): Your code must be fully commented and employ standard C++-style
- *      conventions.
- * 2. User-Friendliness (4 points): All interactions with the user must be clear and unambiguous.
- * 3. Functions (12 points): Each function has the proper declaration and works as expected.
+ *      1. Documentation (4 points): Your code must be fully commented and employ standard C++-style conventions.
+ *      2. User-Friendliness (4 points): All interactions with the user must be clear and unambiguous.
+ *      3. Functions (12 points): Each function has the proper declaration and works as expected.
  * 
  * TOTAL: 20 points
  **/
@@ -41,6 +40,12 @@ void letterCount(string s, int* numVowels, int* numConsonants) {
     string vowels = "AEIOU";
     string consonants = "BCDFGHJKLMNPQRSTVWXYZ";
 
+    // get pointer of first char
+    // I didn't read the part about char pointer until the submission date passed, but basically
+    // I just replaced all instances of s[i] with *(&s[0]+i)
+    // I feel like in this case pointers don't really bring any extra cool stuff, it's just for the assignment
+    char* currentChar = &s[0];
+
     for (int i=0; i<s.length(); i++) {
         // edge case: lowercase letters, numbers
         // spec says all uppercase letters and no spaces, but it doesn't say anything about symbols/numbers
@@ -50,10 +55,10 @@ void letterCount(string s, int* numVowels, int* numConsonants) {
 
         // use string#find to check if it's included in the list
         // if it doesn't find it, it returns -1! If it's not -1, it's in the string
-        if (vowels.find(s[i]) != -1) {
+        if (vowels.find(*(currentChar+i)) != -1) {
             *numVowels = *numVowels + 1;
         }
-        if (consonants.find(s[i]) != -1) {
+        if (consonants.find(*(currentChar+i)) != -1) {
             *numConsonants = *numConsonants + 1;
         }
     }
