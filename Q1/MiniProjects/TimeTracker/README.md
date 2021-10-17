@@ -37,6 +37,7 @@ Time increaseBy(int s)
     This method increases the Time object by the given argument and returns a new object.
 ```
 
+## Grade
 This project will be graded on:
 
 1. Documentation (4 points): Your code must be fully commented and employ standard C++-style conventions.
