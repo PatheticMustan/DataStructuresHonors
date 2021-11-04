@@ -126,6 +126,9 @@ class Square : public Rhombus, public Rectangle {
         float area() {
             return Rectangle::area();
         }
+        float perimeter() {
+            return Rectangle::perimeter();
+        }
 };
 
 
