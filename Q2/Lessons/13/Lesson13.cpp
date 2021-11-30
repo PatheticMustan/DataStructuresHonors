@@ -1,5 +1,7 @@
-/** TemplateFile.cpp, by Kevin Wang
- * does a thing
+/** Lesson13.cpp, by Kevin Wang
+ * Write a program that simulates rolling a pair of 6-sided dice using static_cast.
+ * The numeric distribution should be standard. Then, loop it 10,000 times
+ * and display the percentage of each result.
  **/
 
 #include <bits/stdc++.h>
