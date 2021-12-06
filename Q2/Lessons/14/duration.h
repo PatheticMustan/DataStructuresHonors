@@ -114,11 +114,6 @@ class Duration {
         void randomize() {
             // The class must also include a method called randomize that sets the value of the object
             // to a randomly generated Duration less than one day.
-
-            // https://stackoverflow.com/a/28656020/12894940
-            // apparently just rand() isn't good enough, it keeps returning 23:29:43
-            // the seed changes every second so as long as you don't try it super quickly it'll be different every time
-            srand(time(NULL));
             setRealTime(rand() % (24*60*60));
         }
 
