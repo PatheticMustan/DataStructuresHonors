@@ -18,7 +18,7 @@ class BigMath {
             length = data.length();
 
             // convert string to integers, why does c++ make this so hard
-            for (int i=data.length(); i>=0; i--) {
+            for (int i=0; i<data.length(); i++) {
                 string n = "0123456789";
                 for (int o=0; o<10; o++) {
                     if (n[o] == data[i]) {
@@ -52,11 +52,23 @@ class BigMath {
 
 // toString
 ostream& operator<< (ostream &strm, BigMath &c) {
-	ListNode* head = c.getRaw();
-    while(head != NULL) {
-	    cout << head->getValue();
-    	head = head->getNext();
-	}
+    ListNode* head = c.getRaw();
+    int len = 0;
+
+    // the horror, get the length of the whole list
+    while ((head = head->getNext()) != NULL) len++;
+
+    // make a filled string, we're going to replace everything
+    string result(len, 'Q');
+    
+    // from the top!
+    head = c.getRaw();
+    for (int i=0; i<len; i++) {
+        result[len-i-1] = '0' + head->getValue();
+        head = head->getNext();
+    }
+
+    cout << result;
     return strm;
 }
 ostream& operator<< (ostream &strm, BigMath *c) {

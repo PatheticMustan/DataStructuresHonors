@@ -59,7 +59,7 @@
 #include "ListNode.h"
 using namespace std;
 
-void printMe(ListNode* head) {
+void printMe(BigMath* head) {
 	cout << "[";
 	while(head != NULL) {
 		 cout << head->getValue();
@@ -77,7 +77,7 @@ int main() {
     BigMath a = BigMath(t1);
     BigMath b = BigMath(t2);
 
-    //printMe(b.getRaw());
+    printMe(b.getRaw());
     cout << "first: " << a << endl;
     cout << "second: " << b << endl;
     cout << "a+b: " << a+b << endl;
