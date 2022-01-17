@@ -56,13 +56,12 @@
 
 #include <bits/stdc++.h>
 #include "BigMath.h"
-#include "ListNode.h"
 using namespace std;
 
 void printMe(BigMath* head) {
 	cout << "[";
 	while(head != NULL) {
-		 cout << head->getValue();
+		 cout << head->getDigit();
 		 head = head->getNext();
 		 if(head != NULL)
 			 cout << ", ";
@@ -71,13 +70,15 @@ void printMe(BigMath* head) {
 }
 
 int main() {
-    string t1="", t2="";
-    cin >> t1 >> t2;
+    string t1="1", t2="67890";
+    //cin >> t1 >> t2;
 
     BigMath a = BigMath(t1);
     BigMath b = BigMath(t2);
 
-    printMe(b.getRaw());
+    printMe(&a);
+    printMe(&b);
+
     cout << "first: " << a << endl;
     cout << "second: " << b << endl;
     cout << "a+b: " << a+b << endl;
