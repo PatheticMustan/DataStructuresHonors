@@ -39,7 +39,6 @@ class BigMath {
         }
         BigMath* copyList(BigMath* arg) {
             if (arg->getNext() == NULL) return copyNode(arg);
-
             return new BigMath(arg->getDigit(), copyList(arg->getNext()));
         }
         BigMath* rest(BigMath* arg) {
@@ -53,17 +52,12 @@ class BigMath {
         // hint: second could call the first of rest.
         int second(BigMath* head) {
             if (head->getNext() == NULL) return NULL;
-
             return head->getNext()->getDigit();
         }
         //returns a reference to the last node in the list, or NULL if the list is empty.
         BigMath* pointerToLast(BigMath* head) {
             BigMath* uwu = head;
-
-            while (uwu->getNext() != NULL) {
-                uwu = uwu->getNext();
-            }
-
+            while (uwu->getNext() != NULL) uwu = uwu->getNext();
             return uwu;
         }
 
@@ -88,24 +82,14 @@ class BigMath {
         //returns a reference to a list whose last node's Digit is specified by the argument, such
         //that this last node has been appended to the original list and had its next is set to NULL
         BigMath* insertLast(BigMath* head, int arg) {
-            head->pointerToLast(head)->next = new BigMath(arg, NULL);
-
-            return head;
+            return pointerToLast(head)->next = new BigMath(arg, NULL);
         }
 
-
-
-
-    	// custom operators
-	    BigMath* operator+ (BigMath& other) {
-    	    // 411 + 989 = 1400
-	    	
-    	    return new BigMath("123");
-	    };
-
-        BigMath* operator- (BigMath& other) {
-            return new BigMath("123");
-        };
+        // custom operators
+        BigMath* operator+ (BigMath& other);
+        BigMath* operator- (BigMath& other);
+        friend ostream& operator<< (ostream &strm, BigMath *c);
+        friend ostream& operator<< (ostream &strm, BigMath &c);
 };
 
 // toString
@@ -113,17 +97,17 @@ ostream& operator<< (ostream &strm, BigMath *c) {
     int length = 0;
 
     // get length of string
-    BigMath* head = c;
-    while(head != NULL) {
+    BigMath* tail = c;
+    while(tail != NULL) {
 		length++;
-        head = head->getNext();
+        tail = tail->getNext();
 	}
     // allocate a string, go backwards
     string result(length, 'Q');
-    head = c;
+    tail = c;
     for (int i=0; i<length; i++) {
-        result[length-i-1] = head->getDigit() + '0';
-        head = head->getNext();
+        result[length-i-1] = tail->getDigit() + '0';
+        tail = tail->getNext();
     }
 
     return strm << result;
@@ -131,6 +115,47 @@ ostream& operator<< (ostream &strm, BigMath *c) {
 ostream& operator<< (ostream &strm, BigMath &c) {
     return strm << &c;
 }
+
+
+
+BigMath* BigMath::operator+ (BigMath& other) {
+    BigMath* result = new BigMath(0, NULL);
+    BigMath* resultTail = result;
+
+    BigMath* a = copyList(this);
+    BigMath* b = copyList(&other);
+
+    // add
+    while (a!=NULL || b!=NULL) {
+        int av = (a!=NULL)? a->getDigit() : 0;
+        int bv = (b!=NULL)? b->getDigit() : 0;
+        
+        int r = av + bv;
+        resultTail->setDigit(r);
+
+        if (a != NULL) a = a->getNext();
+        if (b != NULL) b = b->getNext();
+        resultTail->setNext(new BigMath(0, NULL));
+        resultTail = resultTail->getNext();
+    }
+
+    // carry over
+    resultTail = result;
+    int carryOver = 0;
+    while (resultTail != NULL) {
+        resultTail->setDigit(resultTail->getDigit() + carryOver);
+        carryOver = (resultTail->getDigit() > 9)? 1 : 0;
+        resultTail->setDigit(resultTail->getDigit() % 10);
+
+        resultTail = resultTail->getNext();
+    }
+
+    return result;
+};
+
+BigMath* BigMath::operator- (BigMath& other) {
+    return new BigMath("123");
+};
 
 
 #endif

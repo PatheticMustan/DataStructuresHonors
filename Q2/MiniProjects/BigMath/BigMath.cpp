@@ -70,7 +70,7 @@ void printMe(BigMath* head) {
 }
 
 int main() {
-    string t1="1", t2="67890";
+    string t1="1000", t2="100";
     //cin >> t1 >> t2;
 
     BigMath a = BigMath(t1);
