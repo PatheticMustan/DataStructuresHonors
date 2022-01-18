@@ -154,7 +154,38 @@ BigMath* BigMath::operator+ (BigMath& other) {
 };
 
 BigMath* BigMath::operator- (BigMath& other) {
-    return new BigMath("123");
+    BigMath* result = new BigMath(0, NULL);
+    BigMath* resultTail = result;
+
+    BigMath* a = copyList(this);
+    BigMath* b = copyList(&other);
+
+    // add
+    while (a!=NULL || b!=NULL) {
+        int av = (a!=NULL)? a->getDigit() : 0;
+        int bv = (b!=NULL)? b->getDigit() : 0;
+        
+        int r = av - bv;
+        resultTail->setDigit(r);
+
+        if (a != NULL) a = a->getNext();
+        if (b != NULL) b = b->getNext();
+        resultTail->setNext(new BigMath(0, NULL));
+        resultTail = resultTail->getNext();
+    }
+
+    // carry over
+    resultTail = result;
+    int carryOver = 0;
+    while (resultTail != NULL) {
+        resultTail->setDigit(resultTail->getDigit() + carryOver);
+        carryOver = (resultTail->getDigit() > 9)? 1 : 0;
+        resultTail->setDigit(resultTail->getDigit() % 10);
+
+        resultTail = resultTail->getNext();
+    }
+
+    return result;
 };
 
 
