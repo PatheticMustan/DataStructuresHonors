@@ -8,28 +8,31 @@ class BigMath {
     private:
         int digit = 0;
         BigMath* next = nullptr;
-    
+        bool negative = false;
+        
     public:
         // constructors
         BigMath(int v, BigMath* n) { digit = v; next = n; }
         BigMath(string data) {
             // go backwards, so "12345" would be stored as [5, 4, 3, 2, 1]
             // this is to make addition/subtraction easier
-			setDigit(data[data.length()-1] - '0');
-			BigMath* tail = this;
+            setDigit(data[data.length()-1] - '0');
+            BigMath* tail = this;
 
-			for (int i=data.length()-2; i>=0; i--) {
-				tail->setNext(new BigMath(data[i]-'0', NULL));
-				tail = tail->getNext();
-			}
-		}
+            for (int i=data.length()-2; i>=0; i--) {
+                tail->setNext(new BigMath(data[i]-'0', NULL));
+                tail = tail->getNext();
+            }
+        }
 
         // getters
         int getDigit() { return digit; }
         BigMath* getNext() { return next; }
+        bool getNegative() { return negative; }
         // setters
         void setDigit(int d) { digit = d; }
         void setNext(BigMath* node) { next = node; }
+        void setNegative(bool n) { negative = n; }
 
         // COPIED FROM MY EARLIER LISTLAB PROJECT
         // while technically yes this is re-used code, it's my code, so it's all fine!
@@ -63,11 +66,7 @@ class BigMath {
 
         BigMath* pointerBeforeLast(BigMath* head) {
             BigMath* uwu = head;
-            while (uwu->getNext() != NULL) {
-                if (uwu->getNext()->getNext() != NULL) {
-                    uwu = uwu->getNext();
-                }
-            }
+            while (uwu->getNext() != head->pointerToLast(head)) uwu = uwu->getNext();
             return uwu;
         }
         //returns a copy of the last node (not just its Digit!). copyofLast can be recursive.
@@ -99,9 +98,9 @@ ostream& operator<< (ostream &strm, BigMath *c) {
     // get length of string
     BigMath* tail = c;
     while(tail != NULL) {
-		length++;
+        length++;
         tail = tail->getNext();
-	}
+    }
     // allocate a string, go backwards
     string result(length, 'Q');
     tail = c;
@@ -110,13 +109,22 @@ ostream& operator<< (ostream &strm, BigMath *c) {
         tail = tail->getNext();
     }
 
-    return strm << result;
+    return strm << (c->getNegative()? "-" : "") << result;
 }
 ostream& operator<< (ostream &strm, BigMath &c) {
     return strm << &c;
 }
 
-
+void printMe(BigMath* head) {
+	cout << "[";
+	while(head != NULL) {
+		 cout << head->getDigit();
+		 head = head->getNext();
+		 if(head != NULL)
+			 cout << ", ";
+	}
+	cout << "]" << endl;
+}
 
 BigMath* BigMath::operator+ (BigMath& other) {
     BigMath* result = new BigMath(0, NULL);
@@ -139,6 +147,8 @@ BigMath* BigMath::operator+ (BigMath& other) {
         resultTail = resultTail->getNext();
     }
 
+
+
     // carry over
     resultTail = result;
     int carryOver = 0;
@@ -148,6 +158,11 @@ BigMath* BigMath::operator+ (BigMath& other) {
         resultTail->setDigit(resultTail->getDigit() % 10);
 
         resultTail = resultTail->getNext();
+    }
+
+    // lefttrim zeros
+    while (result->pointerToLast(result)!=result && result->pointerToLast(result)->getDigit()==0) {
+        result->pointerBeforeLast(result)->setNext(NULL);
     }
 
     return result;
@@ -160,7 +175,7 @@ BigMath* BigMath::operator- (BigMath& other) {
     BigMath* a = copyList(this);
     BigMath* b = copyList(&other);
 
-    // add
+    // subtract
     while (a!=NULL || b!=NULL) {
         int av = (a!=NULL)? a->getDigit() : 0;
         int bv = (b!=NULL)? b->getDigit() : 0;
@@ -174,15 +189,27 @@ BigMath* BigMath::operator- (BigMath& other) {
         resultTail = resultTail->getNext();
     }
 
-    // carry over
-    resultTail = result;
-    int carryOver = 0;
-    while (resultTail != NULL) {
-        resultTail->setDigit(resultTail->getDigit() + carryOver);
-        carryOver = (resultTail->getDigit() > 9)? 1 : 0;
-        resultTail->setDigit(resultTail->getDigit() % 10);
+    // lefttrim zeros
+    while (result->pointerToLast(result)!=result && result->pointerToLast(result)->getDigit()==0) {
+        result->pointerBeforeLast(result)->setNext(NULL);
+    }
 
-        resultTail = resultTail->getNext();
+    // carry over but negative
+    resultTail = result;
+    printMe(result);
+    while (resultTail != NULL) {
+        if (resultTail->getDigit() < 0 && resultTail->getNext() != NULL) {
+            // if it's negative, add 10 and take 1 from the next place
+            resultTail->setDigit(resultTail->getDigit() + 10);
+            resultTail = resultTail->getNext();
+            resultTail->setDigit(resultTail->getDigit() - 1);
+        } else {
+            resultTail = resultTail->getNext();
+        }
+    }
+    printMe(result);
+    while (result->pointerToLast(result)!=result && result->pointerToLast(result)->getDigit()==0) {
+        result->pointerBeforeLast(result)->setNext(NULL);
     }
 
     return result;

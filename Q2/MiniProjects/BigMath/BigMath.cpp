@@ -58,19 +58,18 @@
 #include "BigMath.h"
 using namespace std;
 
-void printMe(BigMath* head) {
+/*void printMe(BigMath* head) {
 	cout << "[";
 	while(head != NULL) {
-		 cout << head->getDigit();
-		 head = head->getNext();
-		 if(head != NULL)
-			 cout << ", ";
+		cout << head->getDigit();
+		head = head->getNext();
+		if(head != NULL) cout << ", ";
 	}
 	cout << "]" << endl;
-}
+}*/
 
 int main() {
-    string t1="1000", t2="100";
+    string t1="1", t2="10";
     //cin >> t1 >> t2;
 
     BigMath a = BigMath(t1);
