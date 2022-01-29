@@ -69,7 +69,7 @@ using namespace std;
 }*/
 
 int main() {
-    string t1="1", t2="10";
+    /*string t1="1", t2="10";
     //cin >> t1 >> t2;
 
     BigMath a = BigMath(t1);
@@ -82,6 +82,36 @@ int main() {
     cout << "second: " << b << endl;
     cout << "a+b: " << a+b << endl;
     cout << "a-b: " << a-b << endl;
+
+    return 0;*/
+
+    int r;
+    cout << "Do you want to [1] Add, or [2] Subtract?" << endl;
+    cin >> r;
+
+    if (r==1 || r==2) {
+        string t1, t2;
+        cout << "Please enter the two numbers." << endl;
+        cin >> t1 >> t2;
+
+        BigMath a = BigMath(t1);
+        BigMath b = BigMath(t2);
+
+        if (r == 1) {
+            cout << a << " + " << b << " = " << a+b << endl;
+        } else if (r == 2) {
+            cout << a << " - " << b << " = " << a-b << endl;
+        }
+    } else {
+        cout << "Invalid option." << endl;
+    }
+    
+
+    int ta;
+    cout << "If you would like to try again, please type 1." << endl;
+    cin >> ta;
+
+    if (ta == 1) return main();
 
     return 0;
 }

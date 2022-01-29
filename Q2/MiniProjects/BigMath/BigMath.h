@@ -196,7 +196,6 @@ BigMath* BigMath::operator- (BigMath& other) {
 
     // carry over but negative
     resultTail = result;
-    printMe(result);
     while (resultTail != NULL) {
         if (resultTail->getDigit() < 0 && resultTail->getNext() != NULL) {
             // if it's negative, add 10 and take 1 from the next place
@@ -207,7 +206,6 @@ BigMath* BigMath::operator- (BigMath& other) {
             resultTail = resultTail->getNext();
         }
     }
-    printMe(result);
     while (result->pointerToLast(result)!=result && result->pointerToLast(result)->getDigit()==0) {
         result->pointerBeforeLast(result)->setNext(NULL);
     }
