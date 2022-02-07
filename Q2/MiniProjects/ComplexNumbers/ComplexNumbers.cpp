@@ -51,7 +51,6 @@ class Complex {
         double a, b;
         
 
-
     public:
         Complex() {
             a = 0;
