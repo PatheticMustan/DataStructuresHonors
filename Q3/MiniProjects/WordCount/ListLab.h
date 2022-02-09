@@ -71,6 +71,45 @@ class ListNode {
 
             return head;
         }
+
+        void addWord(ListNode* head, string word) {
+            // lowercase, why can't we just have .toLower()?
+            for (int i=0; i<word.length(); i++) word[i] = tolower(word[i]);
+
+            bool found = false;
+            ListNode* h = head;
+
+            while (h->getNext()!=NULL) {
+                cout << h->getWord() << "," << word << "," << h->getWord().compare(word) << endl;
+
+                if (h->getWord().compare(word) == 0) {
+                    h->increment();
+                    found = true;
+                } else if (h->getWord().compare(word) > 0) {
+                    cout << 1 << endl;
+
+                    ListNode* newWord = new ListNode(word, h);
+                    newWord->increment();
+
+                    ListNode* hh = head;
+                    while (hh->getNext() != h) hh = hh->getNext();
+                    hh->setNext(newWord);
+                    
+                    found = true;
+                }
+
+                if (found == true) break;
+
+                h = h->getNext();
+            }
+
+            if (found == false) {
+                cout << 2 << endl;
+                ListNode* newWord = new ListNode(word, NULL);
+                newWord->increment();
+                h->setNext(newWord);
+            }
+        }
 };
 
 #endif
