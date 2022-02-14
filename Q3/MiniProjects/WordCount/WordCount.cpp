@@ -22,22 +22,10 @@
 using namespace std;
 #include "ListLab.h"
 
-void printMe(ListNode* head) {
-	cout << "[";
-	while(head != NULL) {
-		 cout << head->getWord();
-		 head = head->getNext();
-		 if(head != NULL)
-			 cout << ", ";
-	}
-	cout << "]" << endl;
-}
-
 int main() {
     string fileName;
     cout << "Input the filename: ";
-    //cin >> fileName;
-    fileName = "musk.txt";
+    cin >> fileName;
 
     string word;
     ifstream iLoveCopterRoyale(fileName);
@@ -46,7 +34,6 @@ int main() {
 
     while (iLoveCopterRoyale >> word) {
         wordlist->addWord(wordlist, word);
-        printMe(wordlist);
     }
     iLoveCopterRoyale.close();
 

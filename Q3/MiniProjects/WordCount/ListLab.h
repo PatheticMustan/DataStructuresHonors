@@ -47,30 +47,6 @@ class ListNode {
 
             return uwu;
         }
-        ListNode* insertMiddle(ListNode* head, string data, int position) {
-            ListNode* node = new ListNode(data, NULL);
-            if (position == 0) {
-                node->next = (head);
-                return node;
-            }
-
-            ListNode* e = head;
-            // i learned this trick from my javascript friends
-            while (position --> 1) {
-                // if you reach the end of the list early, just stick it on the end
-                if (e->getNext() == NULL) {
-                    e->next = node;
-                    return head;
-                }
-                e = e->getNext();
-            }
-
-            ListNode* rest = e->getNext();
-            e->next = node;
-            node->next = rest;
-
-            return head;
-        }
 
         void addWord(ListNode* head, string word) {
             // lowercase, why can't we just have .toLower()?
@@ -78,15 +54,13 @@ class ListNode {
 
             bool found = false;
             ListNode* h = head;
+            ListNode* end = head->pointerToLast(head);
 
-            while (h->getNext()!=NULL) {
-                cout << h->getWord() << "," << word << "," << h->getWord().compare(word) << endl;
-
+            while (true) {
                 if (h->getWord().compare(word) == 0) {
                     h->increment();
                     found = true;
                 } else if (h->getWord().compare(word) > 0) {
-                    cout << 1 << endl;
 
                     ListNode* newWord = new ListNode(word, h);
                     newWord->increment();
@@ -99,12 +73,12 @@ class ListNode {
                 }
 
                 if (found == true) break;
+                if (h == end) break;
 
                 h = h->getNext();
             }
 
             if (found == false) {
-                cout << 2 << endl;
                 ListNode* newWord = new ListNode(word, NULL);
                 newWord->increment();
                 h->setNext(newWord);
