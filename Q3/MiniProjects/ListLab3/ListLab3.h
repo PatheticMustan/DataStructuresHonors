@@ -34,7 +34,7 @@ class ListNode {
             next = n;
             previous = NULL;
 
-            n->previous = this;
+            if (n != NULL) n->previous = this;
         }
         ListNode(string v, ListNode* n, ListNode* p) {
             value = v;
@@ -46,29 +46,26 @@ class ListNode {
         string getValue() { return value; }
         ListNode* getNext() { return next; }
         ListNode* getPrevious() { return previous; }
+        // setters
+        void setValue(string v) { value = v; }
+        void setNext(ListNode* n) { next = n; }
+        void setPrevious(ListNode* n) { previous = n; }
 
         // util
         // Your file must include methods to add a node at the beginning or specified position of the list
         //      (called add...no additional parameter is beginning; additional parameter is position)
         ListNode* add(ListNode* n) {
-            n->next = this;
-            this->previous = n;
+            n->setNext(this);
+            setPrevious(n);
 
-            return this;
+            return previous;
         }
         ListNode* add(ListNode* n, int index) {
             ListNode* h = this;
             while ((h->getNext() != NULL) && (index-- != 0)) h = h->getNext();
-            h->next = n;
-            n->previous = h;
-
-            return this;
-        }
-        ListNode* addToEnd(ListNode* n) {
-            ListNode* h = this;
-            while (h->getNext() != NULL) h = h->getNext();
-            h->next = n;
-            n->previous = h;
+            n->setPrevious(h);
+            n->setNext(h->next);
+            h->setNext(n);
 
             return this;
         }
@@ -76,19 +73,23 @@ class ListNode {
         // and remove a node at the beginning or specified position of the list
         //      (called remove; same information as above).
         ListNode* remove() {
-            if (this->getNext() == NULL) return NULL;
+            if (getNext() == NULL) return NULL;
 
-            getNext()->previous = NULL;
+            getNext()->setPrevious(NULL);
             return getNext();
         }
         ListNode* remove(int index) {
-            if (index == 0) return this->remove();
+            if (index == 0) return remove();
             
             ListNode* h = this;
-            while ((h->getNext() != NULL) && (index-- != 0)) h = h->getNext();
-
-            getNext()->previous = NULL;
-            return getNext();
+            while ((h->getNext() != NULL) && (index-- != 0)) {
+                h = h->getNext();
+            }
+            
+            h->previous->setNext(h->next);
+            if (h->next != NULL) h->next->setPrevious(h->previous);
+            h->setPrevious(NULL);
+            return this;
         }
 };
 

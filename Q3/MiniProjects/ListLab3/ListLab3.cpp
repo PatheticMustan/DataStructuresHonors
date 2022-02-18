@@ -16,12 +16,29 @@ void printMe(ListNode* head) {
 int main() {
     ListNode* head = new ListNode("hello", NULL);
     head = new ListNode("foo", head);
-    head = new ListNode("boo", head);
-    head = new ListNode("nonsense", head);
+    head = head->add(new ListNode("boo", head));
+    head = head->add(new ListNode("nonsense", head));
     head = new ListNode("computer", new ListNode("science", new ListNode("c++", new ListNode("coffee", head))));
     printMe(head);
+    head = head->add(new ListNode("nat", NULL), 3);
     printMe(head);
 
+    head = head->remove();
+    printMe(head);
+    head = head->remove(0);
+    printMe(head);
+    head = head->remove(1);
+    printMe(head);
+    head = head->remove(4);
+    printMe(head);
+    head = head->remove(4);
+    printMe(head);
+    
+
+
+
+
+    /*
     ListNode* a = head->copyNode(head);
     cout << "The head has a value \"" << head->getValue() << "\" at " << head << endl;
     cout << "The copy of head has a value of \"" << a->getValue() << "\" at " << a << endl;
@@ -61,6 +78,7 @@ int main() {
     cin >> position;
     theRest = head->remove(theRest, position);
     printMe(theRest);
-    
+    */
+
     return 0;
 }
