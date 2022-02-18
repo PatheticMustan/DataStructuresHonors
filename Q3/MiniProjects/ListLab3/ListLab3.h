@@ -85,12 +85,24 @@ class ListNode {
             while ((h->getNext() != NULL) && (index-- != 0)) {
                 h = h->getNext();
             }
-            
+
             h->previous->setNext(h->next);
             if (h->next != NULL) h->next->setPrevious(h->previous);
             h->setPrevious(NULL);
             return this;
         }
 };
+
+ostream& operator<< (ostream& stream, ListNode* head) {
+    stream << "[";
+    while(head != NULL) {
+         stream << head->getValue();
+         head = head->getNext();
+         if(head != NULL)
+             cout << ", ";
+    }
+    stream << "]" << endl;
+    return stream;
+}
 
 #endif
