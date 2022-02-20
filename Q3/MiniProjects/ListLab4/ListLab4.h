@@ -9,8 +9,8 @@ A circular Linked List is a variation of a Linked List in which the first elemen
 and the last element points to the first element.
 
 Create ListLab4.h that demonstrates a circular doubly-linked list.
-- Your file must include methods to add a node at a specified position of the list and remove a node at a 
-    specified position of the list.
+- Your file must include methods to add a node at a specified position of the list
+- and remove a node at a specified position of the list.
 - In addition, please include methods to printForward from a starting position and printBackward from a
     starting position (as measured from your insertion point from the beginning of the creation of the list).
 
@@ -25,22 +25,36 @@ You must also include operators for displaying your list when printed with cout.
 class ListNode {
     private:
         string value = "";
-        ListNode* next = nullptr;
-        ListNode* previous = nullptr;
+        ListNode* next = this;
+        ListNode* previous = this;
+        
+        // only we should be modifying next and previous
+        void setNext(ListNode* n) { next = n; }
+        void setPrevious(ListNode* n) { previous = n; }
     
     public:
         // constructors
         ListNode(string v, ListNode* n) {
             value = v;
-            next = n;
-            previous = NULL;
 
-            if (n != NULL) n->previous = this;
-        }
-        ListNode(string v, ListNode* n, ListNode* p) {
-            value = v;
-            next = n;
-            previous = p;
+            /** There are four values we need to edit
+             *          this.next = loopStart
+             *      this.previous = loopEnd
+             * loopStart.previous = this
+             *       loopEnd.next = this
+             * 
+             * this      = this
+             * loopStart = this | n
+             * loopEnd   = this | n.previous
+             **/
+
+            ListNode* loopStart = (n == NULL)? this : n;
+            ListNode* loopEnd = loopStart->previous;
+
+            next = loopStart;
+            previous = loopEnd;
+            loopStart->previous = this;
+            loopEnd->next = this;
         }
 
         // getters
@@ -49,8 +63,6 @@ class ListNode {
         ListNode* getPrevious() { return previous; }
         // setters
         void setValue(string v) { value = v; }
-        void setNext(ListNode* n) { next = n; }
-        void setPrevious(ListNode* n) { previous = n; }
 
         // util
         // Your file must include methods to add a node at the beginning or specified position of the list
@@ -63,7 +75,7 @@ class ListNode {
         }
         ListNode* add(ListNode* n, int index) {
             ListNode* h = this;
-            while ((h->getNext() != NULL) && (index-- != 0)) h = h->getNext();
+            while (index--) h = h->getNext();
             n->setPrevious(h);
             n->setNext(h->next);
             h->setNext(n);
@@ -94,33 +106,47 @@ class ListNode {
         }
 
         // print methods
-        void printForward () { printForward(0); }
-        void printForward (int index) {
+        void printForward() { printForward(0); }
+        void printForward(int index) {
             ListNode* h = this;
+            while (index--) h = h->getNext();
+            ListNode* head = h;
 
             cout << "[";
-            while(h != NULL) {
-                if (index != 0) {
-                    index--;
-                    continue;
-                }
+            do {
                 cout << h->getValue();
                 h = h->getNext();
-                if(h != NULL) cout << ", ";
-            }
+                if(h != head) cout << ", ";
+            } while (h != head);
+            cout << "]" << endl;
+        }
+        void printBackward() { printBackward(0); }
+        void printBackward(int index) {
+            ListNode* h = this;
+            while (index--) h = h->getNext();
+            ListNode* head = h;
+
+            cout << "[";
+            do {
+                cout << h->getValue();
+                h = h->getPrevious();
+                if(h != head) cout << ", ";
+            } while (h != head);
             cout << "]" << endl;
         }
 };
 
-ostream& operator<< (ostream& stream, ListNode* head) {
+ostream& operator<<(ostream& stream, ListNode* head) {
+    ListNode* h = head;
+
     stream << "[";
-    while(head != NULL) {
-         stream << head->getValue();
-         head = head->getNext();
-         if(head != NULL)
-             cout << ", ";
-    }
+    do {
+        stream << h->getValue();
+        h = h->getNext();
+        if (h != head) stream << ", ";
+    } while (h != head);
     stream << "]" << endl;
+
     return stream;
 }
 

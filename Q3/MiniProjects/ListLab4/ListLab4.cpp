@@ -4,23 +4,23 @@ using namespace std;
 
 int main() {
     ListNode* head = new ListNode("hello", NULL);
-    head = new ListNode("foo", head);
-    head = head->add(new ListNode("boo", head));
-    head = head->add(new ListNode("nonsense", head));
-    head = new ListNode("computer", new ListNode("science", new ListNode("c++", new ListNode("coffee", head))));
+    head->add(new ListNode("foo", head));
+    head->add(new ListNode("boo", head));
+    head->add(new ListNode("nonsense", head));
     cout << head;
+    head->printForward();
+    head->printForward(5);
+    head->printBackward();
+    head->printBackward(5);
+    /*
 
     head = head->add(new ListNode("nat", NULL), 3);
     cout << head;
 
     head = head->remove();
-    cout << head;
     head = head->remove(0);
-    cout << head;
     head = head->remove(1);
-    cout << head;
     head = head->remove(4);
-    cout << head;
     head = head->remove(4);
     cout << head;
 
@@ -28,8 +28,7 @@ int main() {
     head->printForward(1);
     head->printBackward();
     head->printBackward(1);
-    
-    
+    */
 
     return 0;
 }
