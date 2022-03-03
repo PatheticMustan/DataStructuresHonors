@@ -68,17 +68,39 @@ class ListNode {
         // Your file must include methods to add a node at the beginning or specified position of the list
         //      (called add...no additional parameter is beginning; additional parameter is position)
         ListNode* add(ListNode* n) {
-            n->setNext(this);
-            setPrevious(n);
+            // n -> thisnode
+            // (n) (last of n, n.prev) (this) (last of this, this.prev)
+            ListNode* ns = n;
+            ListNode* ne = n->previous;
+            ListNode* ts = this;
+            ListNode* te = this->previous;
+
+            ns->previous = te;
+            ne->next = ts;
+            ts->previous = ne;
+            te->next = ns;
 
             return previous;
         }
         ListNode* add(ListNode* n, int index) {
+            // index 0 is just normal add, return the new head
+            if (index == 0) {
+                add(n);
+                return n;
+            }
+
+            // run down the new position, add
             ListNode* h = this;
-            while (index--) h = h->getNext();
-            n->setPrevious(h);
-            n->setNext(h->next);
-            h->setNext(n);
+            while (index != 0) {
+                if (index > 0) {
+                    index--;
+                    h = h->getNext();
+                } else {
+                    index++;
+                    h = h->getPrevious();
+                }
+            }
+            h->add(n);
 
             return this;
         }

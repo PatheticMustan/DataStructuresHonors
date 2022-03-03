@@ -3,15 +3,17 @@
 using namespace std;
 
 int main() {
-    ListNode* head = new ListNode("hello", NULL);
-    head->add(new ListNode("foo", head));
-    head->add(new ListNode("boo", head));
-    head->add(new ListNode("nonsense", head));
-    cout << head;
+    ListNode* head = new ListNode("aaaaa", NULL);
+    head->add(new ListNode("bbbbb", NULL));
+    head->add(new ListNode("ccccc", NULL));
+    head->add(new ListNode("eeeee", NULL));
+    head->add(new ListNode("ddddd", NULL), 3);
+    new ListNode("fffff", head);
+    
     head->printForward();
-    head->printForward(5);
     head->printBackward();
-    head->printBackward(5);
+
+    
     /*
 
     head = head->add(new ListNode("nat", NULL), 3);
