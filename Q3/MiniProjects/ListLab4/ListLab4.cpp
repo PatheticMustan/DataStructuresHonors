@@ -13,24 +13,22 @@ int main() {
     head->printForward();
     head->printBackward();
 
-    
-    /*
-
-    head = head->add(new ListNode("nat", NULL), 3);
+    head = head->add(new ListNode("nat", NULL), 0);
     cout << head;
-
-    head = head->remove();
-    head = head->remove(0);
-    head = head->remove(1);
-    head = head->remove(4);
-    head = head->remove(4);
-    cout << head;
-
-    head->printForward();
-    head->printForward(1);
     head->printBackward();
-    head->printBackward(1);
-    */
 
+    
+    head = head->remove();
+    head->printForward();
+    head->printBackward();
+
+    head = head->remove(0);
+    head->printForward();
+    head->printBackward();
+
+    head = head->remove(1);
+    head->printForward();
+    head->printBackward();
+    
     return 0;
 }

@@ -107,23 +107,30 @@ class ListNode {
 
         // and remove a node at the beginning or specified position of the list
         //      (called remove; same information as above).
+        //      zinn was vague so one node lists should stay as one node, she didn't specify specifics
         ListNode* remove() {
-            if (getNext() == NULL) return NULL;
+            // previous, this, next
+            ListNode* previous = getPrevious();
+            ListNode* next = getNext();
 
-            getNext()->setPrevious(NULL);
-            return getNext();
+            // connect two nodes
+            previous->setNext(next);
+            next->setPrevious(previous);
+            // isolate removed node
+            setNext(this);
+            setPrevious(this);
+
+            return next;
         }
         ListNode* remove(int index) {
             if (index == 0) return remove();
             
+            // run down the new position, remove
             ListNode* h = this;
-            while ((h->getNext() != NULL) && (index-- != 0)) {
-                h = h->getNext();
-            }
-
-            h->previous->setNext(h->next);
-            if (h->next != NULL) h->next->setPrevious(h->previous);
-            h->setPrevious(NULL);
+            while (index --> 0) h = h->getNext();
+            
+            ListNode* result = h->remove();
+            if (result == this) return getNext();
             return this;
         }
 
