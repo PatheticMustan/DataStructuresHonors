@@ -28,46 +28,49 @@ int main() {
     cin >> fileName;
 
     ifstream input(fileName);
+    ofstream result("result.txt");
     
     // The first line for each run is the number of participants and the second line is the cycle.
     // The cycle number does not need to be less than the number of participants, but both will be positive values.
-    int runs = -1,
+    int participants = -1,
         cycle = -1;
 
-    input >> runs;
-    if (input.is_open()) {
-        cout << "natsumi" << runs;
+    int runs = 0;
+    if (input.is_open() && result.is_open()) {
+        while (input >> participants) {
+            input >> cycle;
 
-    } else {
-        cout << "unable to open " << fileName << endl;
-    }
-    while (input >> runs) {
-        input >> cycle;
-
-        // create cycle, 
-        for (int i=0; i<cycle; i++) {
-            if (i == 0) {
-                head = new ListNode(to_string(i), NULL);
-            } else {
-                head->add(new ListNode(to_string(i), NULL));
+            // create cycle, 
+            for (int i=0; i<participants; i++) {
+                if (i == 0) {
+                    head = new ListNode(to_string(i), NULL);
+                } else {
+                    head->add(new ListNode(to_string(i), NULL));
+                }
             }
+
+            int currentCycle = 0;
+            while (head != head->getNext()) {
+                currentCycle++;
+                if (currentCycle == cycle) {
+                    //cout << head->getValue();
+                    head = head->remove();
+                    currentCycle = 0;
+                } else {
+                    head = head->getNext();
+                }
+            }
+
+            // Your program must output the trial number followed by a colon and a single space and then the position of the
+            // trial winner, one trial per line, in a new text file called "result.txt" that is created by your program.
+            //cout << " - " << participants << " " << cycle << " --> " << (stoi(head->getValue()) + 1) << endl;
+            result << runs << ": " << (stoi(head->getValue())+1) << endl;
+            runs++;
         }
-        head = head->getNext();
-
-        // Your program must output the trial number followed by a colon and a single space and then the position of the
-        // trial winner, one trial per line, in a new text file called "result.txt" that is created by your program.
-        cout << head;
-    }
-    input.close();
-
-
-
-    ofstream result("result.txt");
-    if (result.is_open()) {
-        result << "poopoo";
+        input.close();
         result.close();
     } else {
-        cout << "Unable to open file";
+        cout << "unable to open one of the files...?" << endl;
     }
 
     return 0;
