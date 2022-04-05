@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CircularLinkedList.h"
+#include "Stack.h"
 using namespace std;
 
 /**
@@ -32,8 +32,6 @@ bool checkParen(string p) {
 }
 
 int main() {
-    ListNode* head;
-
     string fileName = "a.txt";
     //cout << "Input the filename: ";
     //cin >> fileName;
