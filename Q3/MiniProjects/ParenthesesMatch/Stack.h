@@ -54,6 +54,18 @@ class Stack {
 
             return "";
         }
+
+        string peek() {
+            if (getNext() == NULL) {
+                return "";
+            } else {
+                Stack* end = this;
+                while (end->getNext()->getNext() != NULL) end = end->getNext();
+                return end->getNext()->getValue();
+            }
+
+            return "";
+        }
 };
 
 ostream& operator<<(ostream& stream, Stack* head) {
@@ -63,7 +75,7 @@ ostream& operator<<(ostream& stream, Stack* head) {
         head = head->getNext();
         if (head != NULL) cout << ", ";
     }
-    stream << "]" << endl;
+    stream << "]";
     return stream;
 }
 

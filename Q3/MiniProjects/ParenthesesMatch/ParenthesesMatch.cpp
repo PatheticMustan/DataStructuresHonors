@@ -22,11 +22,15 @@ using namespace std;
 
 bool checkParen(string p) {
     string possibleParens = "([{<)]}>";
+    Stack* parens = new Stack("");
 
     for (int i=0; i<p.length(); i++) {
-        if (possibleParens.find(p[i]) != -1) cout << p[i];
+        if (possibleParens.find(p[i]) != -1) {
+            
+            parens->push(string(1, p[i]));
+        }
     }
-    cout << endl;
+    cout << parens << endl;
 
     return true;
 }
