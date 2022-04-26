@@ -24,21 +24,39 @@ bool checkParen(string p) {
     string possibleParens = "([{<)]}>";
     Stack* parens = new Stack("");
 
+    //cout << "checking: " << p << endl;
+
     for (int i=0; i<p.length(); i++) {
-        if (possibleParens.find(p[i]) != -1) {
+        int parenIndex = possibleParens.find(p[i]);
+        if (parenIndex != string::npos) {
+            //cout << parens << " ";
+
+            // if it's a opening bracket
+            // possibleParens/2 = 8/2 = 4
+            if (parenIndex < 4) {
+                //cout << "adding " << to_string(parenIndex) << endl;
+                parens->push(to_string(parenIndex));
+            } else {
+                // it's a closing bracket
+                string popThing = parens->pop();
+                //cout << "removing " << (parenIndex%4) << ", getting " << popThing << endl;
+                if (popThing != to_string(parenIndex%4)) {
+                    //cout << "ouch! false" << endl;
+                    return false;
+                }
+            }
             
-            parens->push(string(1, p[i]));
         }
     }
-    cout << parens << endl;
 
-    return true;
+    //cout << "ending with " << parens->peek() << endl;
+    return parens->peek() == "";
 }
 
 int main() {
-    string fileName = "a.txt";
-    //cout << "Input the filename: ";
-    //cin >> fileName;
+    string fileName = "";
+    cout << "Input the filename: ";
+    cin >> fileName;
 
     ifstream input(fileName);
     ofstream result("result.txt");
@@ -48,7 +66,7 @@ int main() {
     int runs = 0;
     if (input.is_open() && result.is_open()) {
         while (getline(input, parens)) {
-            result << runs << ": " << checkParen(parens) << endl;
+            result << (runs+1) << ": " << (checkParen(parens)? "true" : "false") << endl;
             runs++;
         }
         input.close();

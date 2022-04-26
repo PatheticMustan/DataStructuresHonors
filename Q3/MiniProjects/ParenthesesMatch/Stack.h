@@ -41,8 +41,9 @@ class Stack {
 
         string pop() {
             if (getNext() == NULL) {
+                string val = getValue();
                 setValue("");
-                return "";
+                return val;
             } else {
                 Stack* end = this;
                 while (end->getNext()->getNext() != NULL) end = end->getNext();
@@ -57,11 +58,11 @@ class Stack {
 
         string peek() {
             if (getNext() == NULL) {
-                return "";
+                return getValue();
             } else {
                 Stack* end = this;
-                while (end->getNext()->getNext() != NULL) end = end->getNext();
-                return end->getNext()->getValue();
+                while (end->getNext() != NULL) end = end->getNext();
+                return end->getValue();
             }
 
             return "";
