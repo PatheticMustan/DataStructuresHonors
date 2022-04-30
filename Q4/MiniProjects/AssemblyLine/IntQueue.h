@@ -47,7 +47,7 @@ class IntQueue {
             } else {
                 // so simple..!?!?
                 setValue(getNext()->getValue());
-                setNext(getNext());
+                setNext(getNext()->getNext());
                 return val;
             }
 

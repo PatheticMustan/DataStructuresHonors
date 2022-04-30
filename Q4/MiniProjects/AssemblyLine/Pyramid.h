@@ -68,24 +68,11 @@ class Pyramid {
 };
 
 ostream& operator<<(ostream& stream, Pyramid* head) {
-    // get length of list
-    Pyramid* p = head;
-    int len = 0;
-    while (p != NULL) { p = p->getNext(); len++; }
-
-    // stick it in an array
-    int tokens[len];
-    p = head;
-    for (int i=0; i<len; i++) {
-        tokens[i] = p->getValue();
-        p = p->getNext();
-    }
-
-    // ahhhhhh spew out
     stream << "[";
-    for (int i=0; i<len; i++) {
-        cout << tokens[i];
-        if (i != len-1) cout << ", ";
+    while (head != NULL) {
+        stream << head->getValue();
+        head = head->getNext();
+        if (head != NULL) cout << ", ";
     }
     stream << "]";
     return stream;

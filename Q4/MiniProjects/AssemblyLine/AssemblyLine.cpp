@@ -19,10 +19,11 @@ using namespace std;
 
 class AssemblyLine {
     private:
-        IntQueue* assemblyLineIn = NULL;
-        QueueQueue* assemblyLineOut = NULL;
-        Pyramid* robotArm = NULL;
     public:
+        IntQueue* assemblyLineIn = NULL;       // a queue of int's
+        QueueQueue* assemblyLineOut = NULL;    // a queue of *Pyramid's
+        Pyramid* robotArm = NULL;              // a stack of int's
+
         /**
          * initializes this object so the assemblyLineIn contains nDisks with random radii;
          * assemblyLineOut is initialized to an empty Queue;
@@ -33,9 +34,9 @@ class AssemblyLine {
             assemblyLineOut = new QueueQueue();
             robotArm = new Pyramid();
 
-            // queue a random number 1-10, n times
+            // queue a random number 1-69, n times
             for (int i=0; i<n; i++) {
-                assemblyLineIn->enqueue(rand() % 10 + 1);
+                assemblyLineIn->enqueue(rand()%69 + 1);
             }
         }
 
@@ -55,19 +56,42 @@ class AssemblyLine {
          * when all the disks have been retrieved from assemblyLineIn, robotArm is unloaded.
          * Precondition: robotArm is empty; assemblyLineOut is empty
          **/
-        //process
+        void process() {
+            // shake it out! process disks until assembly line is empty
+            while (assemblyLineIn->peek() != -1) {
+                int disk = assemblyLineIn->dequeue();
+                if (robotArm->peek() <= disk) {
+                    robotArm->push(disk);
+                } else {
+                    unloadRobot(robotArm);
+                    robotArm = new Pyramid();
+                    robotArm->push(disk);
+                }
+            }
+            // unload any leftover pyramids
+            if (robotArm->peek() != -1) {
+                unloadRobot(robotArm);
+                robotArm = new Pyramid();
+            }
+        }
 
 };
 
 int main() {
+    // randomize based on time
     srand (time(NULL));
 
     int n;
     cout << "Enter n: " << endl;
     cin >> n;
 
+    // this is pretty self explanatory
+    // hehehehe ass
     AssemblyLine* ass = new AssemblyLine(n);
 
+    cout << ass->assemblyLineIn << endl;
+    ass->process();
+    cout << ass->assemblyLineOut << endl;
 
     return 0;
 }
