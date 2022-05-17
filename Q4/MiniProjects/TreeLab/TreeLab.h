@@ -6,23 +6,17 @@ class TreeNode {
 
 		// shortcut constructor
 		TreeNode(char s) {
-			value = s;
-			left = NULL;
-			right = NULL;
+			value = s; left = NULL; right = NULL;
 		}
 	
 	public:
 		// takes a string parameter and builds a BST where each letter is a node
 		TreeNode* buildTree(string s) {
-			// uhhhh as long as s isn't empty, 'v' should be replaced
-			TreeNode* r = new TreeNode('v');
+			TreeNode* r = new TreeNode('v'); // uhhhh as long as s isn't empty, 'v' should be replaced
 
-			for (int i; i<s.length(); i++) {
-				if (i==0) {
-					r->value = s[i];
-				} else {
-					insert(r, s[i]);
-				}
+			for (int i=0; i<s.length(); i++) {
+				if (i==0) 	r->value = s[i];
+				else 		insert(r, s[i]);
 			}
 
 			return r;
@@ -34,7 +28,7 @@ class TreeNode {
 			
 			// mwahahhahah while true
 			while (true) {
-				if (target->value <= s) {
+				if (target->value > s) {
 					// left node
 					if (target->left == NULL) {
 						target->left = new TreeNode(s);
@@ -54,6 +48,8 @@ class TreeNode {
 			}
 		}
 
+		// this is where the fun begins
+		// formatted for optimal eyebleeding
 		string display(TreeNode* t, int level) {
 			return
 				(t==NULL)?
@@ -61,7 +57,6 @@ class TreeNode {
 					(level==0)?
 						string(1, t->value) :
 						display(t->left, level-1) + display(t->right, level-1);
-			}
 		}
 
 		string preorderTraverse(TreeNode* t) {
@@ -99,20 +94,53 @@ class TreeNode {
 						countLeaves(t->left) + countLeaves(t->right);
 		}
 
-		//int countGrandParents(TreeNode* t) {}
-
-		//int countOnlyChildren(TreeNode* t)
-		//int height(TreeNode* t) returns the max of the heights to the left and the heights to the right ;
-		//int longestPath(TreeNode* t) return the max of the sum of the heights to the left and the heights to the right
-		char min(TreeNode* t) {
-			char m = 128;
-			while (t != NULL) {
-				m = std::min(m, t->value);
-				t = t->left;
-			}
-			return m;
+		// this is so funny to me
+		int countOnlyChildren(TreeNode* t) {
+			return
+				(t==NULL)?
+					0 :
+					int(t->left==NULL ^ t->right==NULL) + countOnlyChildren(t->left) + countOnlyChildren(t->right);
 		}
-		//char max(TreeNode* t)
+
+		// this is even funnier
+		int countGrandParents(TreeNode* t) { 
+			return
+				(t==NULL)?
+					0 :
+					int(display(t, 2) != "") + countGrandParents(t->left) + countGrandParents(t->right);
+		}
+
+		// returns the max of the heights to the left and the heights to the right
+		// should i even bother expanding this, when it's so deliciously concise
+		int height(TreeNode* t) {
+			return (t==NULL)? 0 : std::max(height(t->left), height(t->right)) + 1;
+		}
+
+		// return the max of the sum of the heights to the left and the heights to the right
+		int longestPath(TreeNode* t) {
+			// i'm not sure i understand this right
+			return height(t->left) + height(t->right);
+		}
+
+		// check along left edge
+		char min(TreeNode* t) {
+			return 
+				(t == NULL)?
+					127 :
+					std::min(
+						t->value,
+						(t->left!=NULL)? min(t->left) : min(t->right));
+		}
+
+		char max(TreeNode* t) {
+			return 
+				(t == NULL)?
+					0 :
+					std::max(
+						t->value,
+						(t->right!=NULL)? max(t->right) : max(t->left));
+		}
+
 		//string displayCurrentLevel(TreeNode* t, int level)
 		//string displayLevelOrder(TreeNode* t) 
 	

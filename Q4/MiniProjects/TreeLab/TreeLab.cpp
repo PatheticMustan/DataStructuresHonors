@@ -14,6 +14,7 @@ int main() {
 	//string s = "XAFP";
 	//string s = "XDFZM";
 	
+
 	TreeNode* root = nullptr;
 	root = root->buildTree(s);
 	cout << root->display(root, 0) << endl;
@@ -24,7 +25,6 @@ int main() {
 
 	cout << "\n\nNodes = " << root->countNodes(root) << endl;
 	cout << "Leaves = " << root->countLeaves(root) << endl;
-	/*
 	cout << "Only children = " << root->countOnlyChildren(root) << endl;
 	cout << "Grandparents = " << root->countGrandParents(root) << endl;
 
@@ -32,9 +32,8 @@ int main() {
 	cout << "Longest path = " << root->longestPath(root) << endl;
 	cout << "Min = " << root->min(root) << endl;
 	cout << "Max = " << root->max(root) << endl;	
-
+	
 	cout << "\nBy Level: " << root->displayLevelOrder(root) << endl;
-	*/
 
 	return 0;
 }
