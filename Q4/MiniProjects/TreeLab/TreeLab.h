@@ -118,8 +118,15 @@ class TreeNode {
 
 		// return the max of the sum of the heights to the left and the heights to the right
 		int longestPath(TreeNode* t) {
-			// i'm not sure i understand this right
-			return height(t->left) + height(t->right);
+			// return height(t->left) + height(t->right);
+
+			// this handles an edgecase where the longest path does not pass through the root node
+			return 
+				(t==NULL)?
+					0 :
+					std::max(
+						height(t->left) + height(t->right),
+						std::max(longestPath(t->left), longestPath(t->right)));
 		}
 
 		// check along left edge
@@ -141,8 +148,21 @@ class TreeNode {
 						(t->right!=NULL)? max(t->right) : max(t->left));
 		}
 
-		//string displayCurrentLevel(TreeNode* t, int level)
-		//string displayLevelOrder(TreeNode* t) 
+		// apparently this is just a weird way to display
+		string displayCurrentLevel(TreeNode* t, int level) {
+			return display(t, level);
+		}
+
+		// display tree by level
+		// i don't want to figure out how to make this recursive, so i guess this'll just have to be written normally
+		string displayLevelOrder(TreeNode* t) {
+			int h = height(t);
+			string r = "";
+			for (int i=0; i<h; i++) {
+				r.append(displayCurrentLevel(t, i)); // (+ " ") ?????
+			}
+			return r;
+		}
 	
 	// this class must contain the character representing the current letter as well as
 	// pointers to the left and right children
