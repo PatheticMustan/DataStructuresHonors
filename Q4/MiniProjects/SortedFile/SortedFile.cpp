@@ -19,11 +19,23 @@ int main() {
 	TreeNode* root = new TreeNode("");
 
 	root->insert(root, "banana");
-    root->insert(root, "banana");
     root->insert(root, "apple");
+    root->insert(root, "baNaNa");
+    root->insert(root, "car");
+    root->insert(root, "cat");
+    root->insert(root, "aaaa");
+    root->insert(root, "zzz");
+    root->insert(root, "applejack");
+    root->insert(root, "amongus");
+    root->insert(root, "banana");
+    root->insert(root, "ZXY");
     root->insert(root, "cookie");
     root->insert(root, "banana");
+    root->insert(root, "aaa");
+    root->insert(root, "a");
     cout << root->displayLevelOrder(root) << endl;
+    cout << root->min(root) << endl;
+    cout << root->max(root) << endl;
 
     ifstream input("input.txt");
     ofstream result("result.txt");
