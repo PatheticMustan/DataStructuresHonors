@@ -62,6 +62,20 @@ class TreeNode {
 						display(t->left, level-1) + display(t->right, level-1);
 		}
 
+		// this is so bad
+		string inorderTraverse(TreeNode* t) {
+			if (t == NULL) return "";
+
+			string left = inorderTraverse(t->left);
+			string right = inorderTraverse(t->right);
+			string value = (t->value + ": " + to_string(t->count));
+
+			return
+				left + (left==""? " " : "") +
+				value + (right==""? " " : "") +
+				right;
+		}
+
 		int countNodes(TreeNode* t) {
 			return
 				(t==NULL)?
