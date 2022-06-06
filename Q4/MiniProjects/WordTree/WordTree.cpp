@@ -16,7 +16,7 @@ using namespace std;
 #include "BSTree.h"
 
 int main() {
-	WordNode* root;
+	WordNode* root = new WordNode();
 
     ifstream input("input.txt");
     ofstream result("result.txt");
@@ -25,15 +25,17 @@ int main() {
     if (input.is_open() && result.is_open()) {
         root->buildTree(input, count);
 
-        cout << endl << count << endl;
-        
+        int total = root->countNodes(root);
+
+        cout << "List total: " << count << endl;
+        cout << "Tree total: " << total << endl;
+        cout << "Savings: " << (1-((double)total / count))*100 << endl;
+
         input.close();
         result.close();
     } else {
         cout << "unable to open one of the files...?" << endl;
     }
-
-    
 
 	return 0;
 }
