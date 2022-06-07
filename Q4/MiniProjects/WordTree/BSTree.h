@@ -37,7 +37,15 @@ class WordNode {
 			t->endOfWord = true;
 		}
 
-		void traverse(string prefix, WordNode* w, ofstream &file);
+		void traverse(string prefix, WordNode* w, ofstream &file) {
+			if (w->endOfWord) file << prefix << endl;
+			for (int i=0; i<26; i++) {
+				if (w->children[i] != NULL) {
+					traverse(prefix + string(1, i+'a'), w->children[i], file);
+				}
+			}
+		}
+
 		int countNodes(WordNode* w) {
 			int c = 1;
 			for (int i=0; i<26; i++) {

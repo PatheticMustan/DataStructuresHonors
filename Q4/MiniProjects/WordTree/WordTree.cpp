@@ -27,9 +27,11 @@ int main() {
 
         int total = root->countNodes(root);
 
-        cout << "List total: " << count << endl;
-        cout << "Tree total: " << total << endl;
-        cout << "Savings: " << (1-((double)total / count))*100 << endl;
+        result << "List total: " << count << endl;
+        result << "Tree total: " << total << endl;
+        result << "Savings: " << (1-((double)total / count))*100 << endl;
+
+        root->traverse("", root, result);
 
         input.close();
         result.close();
